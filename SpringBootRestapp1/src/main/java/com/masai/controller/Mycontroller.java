@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -58,8 +59,16 @@ public class Mycontroller {
 	
 	@GetMapping("/student")  //requestparameter used
 	public Student getStudentHandler(@RequestParam("roll") Integer roll) {
-		Student student = new Student();
+		Student student = new Student(roll,"rajat","delhi",880);
 		
 		return student;
+	}
+	
+	@PostMapping("saveStudent")
+	public String saveStudentHandler(@RequestBody Student student) {
+		
+		
+		
+		return student.toString()+"saved successfully";
 	}
 }

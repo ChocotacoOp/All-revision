@@ -2,9 +2,11 @@ package com.masai.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,22 +38,26 @@ public class StudentController {
 	}
 	
 	@GetMapping("/students/{roll}")
-	public Student getStudentbyRollHandler(@PathVariable("roll") Integer roll) {
+	public ResponseEntity<Student> getStudentbyRollHandler(@PathVariable("roll") Integer roll) {
 		
 		List<Student> list= students.stream().filter(s-> s.getRoll()==roll).collect(Collectors.toList());
 		
 		if(list.size() ==0)
 			throw new IllegalArgumentException("student does not exist with roll"+roll);
 		
-		return list.get(0);
+		HttpHeaders hh = new HttpHeaders();
+		hh.add("abc", "rajat");
+		hh.add("hello", "world");
+//		return list.get(0);
+		return new ResponseEntity<Student>(list.get(0),hh,HttpStatus.OK);
 	}
 	
 	@PostMapping("/students")
-	public List<Student> addStudentHandler(@RequestBody Student student){
+	public ResponseEntity<String> addStudentHandler(@RequestBody Student student){
 		
 		students.add(student);
 		
-		return students;
+		return new ResponseEntity<String>("student added successfully !",HttpStatus.CREATED); 
 	}
 	
 	@PutMapping("/students/{roll}")
@@ -109,4 +115,6 @@ public class StudentController {
 	
 		return "student marks graced";
 	}
+	
+	
 }
