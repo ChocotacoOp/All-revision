@@ -13,10 +13,16 @@ public class Mycontroller {
 	@GetMapping("/hello/{id}")
 	public ResponseEntity<String> sayHello(@PathVariable("id") Integer id )throws InvalidIdexception {
 		
-		if(id>10)
+		if(id>=10)
 			return new ResponseEntity<String>("welcome to spring boot ",HttpStatus.ACCEPTED);
 		else
 			throw new InvalidIdexception("Invalid id value ");
+	}
+	
+	@GetMapping("/hello")
+	public ResponseEntity<String> sayHello(){
+		
+		return new ResponseEntity<String>("hello this is a liitle exception handler concept implementation",HttpStatus.OK);
 	}
 
 	
