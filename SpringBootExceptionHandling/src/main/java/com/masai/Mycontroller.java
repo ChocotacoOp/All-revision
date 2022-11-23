@@ -19,11 +19,7 @@ public class Mycontroller {
 			throw new InvalidIdexception("Invalid id value ");
 	}
 	
-	@GetMapping("/hello")
-	public ResponseEntity<String> sayHello(){
-		
-		return new ResponseEntity<String>("hello this is a liitle exception handler concept implementation",HttpStatus.OK);
-	}
+	
 
 	
 	
