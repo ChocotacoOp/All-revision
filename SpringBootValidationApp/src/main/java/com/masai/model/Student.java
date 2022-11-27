@@ -1,10 +1,22 @@
 package com.masai.model;
 
-public class Student {
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
+
+public class Student {
+	
+	@NotNull(message = "Invalid roll Number")
+	@Min(value = 10 , message = "{roll.invalid}")
 	private Integer roll;
+	
+	@Size(min = 3, max = 8 , message = "{name.invalid}")
 	private String name;
 	private String address;
+	@NotNull(message = "Marks is mandatory")
+	@Max(value = 800, message = "marks should be max of 800")
 	private Integer marks;
 
 	

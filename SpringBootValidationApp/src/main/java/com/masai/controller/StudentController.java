@@ -1,5 +1,7 @@
 package com.masai.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +14,7 @@ import com.masai.model.Student;
 public class StudentController {
 
 	@PostMapping("/students")
-	public ResponseEntity<String> registerStudent(@RequestBody Student student){
+	public ResponseEntity<String> registerStudent(@Valid @RequestBody Student student){
 		
 		//we need to connect to SL + DAL to save supplied data in the database.
 		
