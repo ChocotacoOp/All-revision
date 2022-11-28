@@ -25,15 +25,19 @@ public class StudentServiceImpl implements StudentService{
 
 	@Override
 	public Student getStudentByRoll(Integer roll) throws StudentException {
-		Optional<Student> opt= sRepo.findById(roll);
+
+//		Optional<Student> opt= sRepo.findById(roll);
+//		if(opt.isPresent()) {
+//		Student student = opt.get();
+//		
+//		return student;
+//		}
+//		else
+//			throw new StudentException("Student not found with this roll"+roll);
 		
-		if(opt.isPresent()) {
-		Student student = opt.get();
+//		from java 8 we have short method 
+		return sRepo.findById(roll).orElseThrow(()-> new StudentException("Student does not exist with Roll:"+roll));
 		
-		return student;
-		}
-		else
-			throw new StudentException("Student not found with this roll"+roll);
 	}
 
 }
