@@ -8,9 +8,9 @@ public class Test {
 		Scanner sc = new Scanner(System.in);
 		
 		System.out.println("Enter value ");
-		double number = sc.nextDouble();
+		String s = sc.next();
 		
-		System.out.println(number);
+		System.out.println(s.substring(0, 0));
 	}
 
 }
