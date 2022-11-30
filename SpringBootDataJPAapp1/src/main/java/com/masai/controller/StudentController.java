@@ -1,13 +1,18 @@
 package com.masai.controller;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.masai.exception.StudentException;
@@ -38,4 +43,69 @@ public class StudentController {
 		
 		return new ResponseEntity<Student>(student, HttpStatus.OK);
 	}
+	
+	@GetMapping("/students")
+	public ResponseEntity<List<Student>> getAllStudents() throws StudentException{
+		
+		List<Student> students = sService.getAllStudents();
+		
+		return new ResponseEntity<List<Student>>(students,HttpStatus.OK);
+	}
+	
+	
+	@DeleteMapping("/students/{roll}")
+	public ResponseEntity<Student> deleteStudentById(@PathVariable Integer roll)throws StudentException{
+		
+		Student student = sService.deleteStudentByRoll(roll);
+		return new ResponseEntity<Student>(student,HttpStatus.OK);
+	}
+	
+	
+	@PutMapping("/students")
+	public ResponseEntity<Student> updateStudentHandler(@RequestBody Student student) throws StudentException{
+		
+		Student updatedStudent = sService.updateStudentDetails(student);
+		
+		return new ResponseEntity<Student>(updatedStudent,HttpStatus.ACCEPTED);
+	}
+	
+	@PutMapping("/students/{roll}")
+	public ResponseEntity<Student> updateStudentMarks(@PathVariable Integer roll , @RequestParam Integer gmarks) throws StudentException{
+		Student student = sService.updateStudentMarks(roll, gmarks);
+		
+		return new ResponseEntity<Student>(student,HttpStatus.ACCEPTED);
+	}
+	
+	@GetMapping("/getstudents/{marks}")
+	public ResponseEntity<List<Student>> getStudentByMarks(@PathVariable("marks") Integer marks) throws StudentException{
+		List<Student> students= sService.getStudentByMarks(marks);
+		
+		return new ResponseEntity<List<Student>>(students,HttpStatus.OK);
+	}
+	
+	@GetMapping("/getbyname/{name}")
+	public ResponseEntity<List<Student>> getStudentByName(@PathVariable String name ) throws StudentException{
+		
+		List<Student> students= sService.getStudentByName(name);
+		
+		return new ResponseEntity<List<Student>>(students,HttpStatus.OK);
+	}
+	
+	@GetMapping("/getbyaddress/{address}")
+	public ResponseEntity<Student> getStudentByAddress(@PathVariable("address") String address) throws StudentException{
+		Student student= sService.getStudentByAddress(address);
+		
+		return new ResponseEntity<Student>(student,HttpStatus.OK);
+	}
+	
+	
+	@GetMapping("/getbynameormarks/{name}/{marks}")
+	public ResponseEntity<List<Student>> getStudentByNameOrMarks(@PathVariable("name") String name, @PathVariable("marks") Integer marks) throws StudentException{
+		
+		
+		List<Student> students= sService.getStudentByNameOrMarks(name, marks);
+		
+		return new ResponseEntity<List<Student>>(students,HttpStatus.OK);
+	}
+	
 }

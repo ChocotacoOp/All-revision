@@ -1,8 +1,10 @@
 package com.masai.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.masai.exception.StudentException;
@@ -39,5 +41,110 @@ public class StudentServiceImpl implements StudentService{
 		return sRepo.findById(roll).orElseThrow(()-> new StudentException("Student does not exist with Roll:"+roll));
 		
 	}
+
+	@Override
+	public List<Student> getAllStudents() throws StudentException {
+		
+		List<Student> students= sRepo.findAll();
+		
+		if(students.size()==0) {
+			throw new StudentException("No student data are there !");
+		}
+		else
+			return students;
+	
+	
+	}
+
+	@Override
+	public Student deleteStudentByRoll(Integer roll) throws StudentException {
+		// TODO Auto-generated method stub
+		Optional<Student> opt= sRepo.findById(roll);
+		if(opt.isPresent()) {
+			
+//			Student student = opt.get();
+//			sRepo.delete(student);
+//			return student;
+			
+			sRepo.delete(opt.get());
+			return opt.get(); 
+		}
+		else
+			throw new StudentException("No student found with that Roll"+roll);
+	}
+
+	@Override
+	public Student updateStudentDetails(Student student) throws StudentException {
+	
+		Optional<Student> opt = sRepo.findById(student.getRoll());
+		
+		if(opt.isPresent()) {
+			Student updatedStudent= sRepo.save(student);
+			return updatedStudent;
+		}
+		else
+			throw new StudentException("Invalid Student Details");
+	}
+
+	@Override
+	public Student updateStudentMarks(Integer roll, Integer gmarks) throws StudentException {
+		
+		Student existingStudent = sRepo.findById(roll).orElseThrow(()-> new StudentException("student does not exist with roll"+roll));
+		
+		existingStudent.setMarks(existingStudent.getMarks()+gmarks);
+		
+		Student student = sRepo.save(existingStudent);
+		return student;
+	}
+
+	@Override
+	public List<Student> getStudentByMarks(Integer marks) throws StudentException {
+		
+		List<Student> student = sRepo.findByMarks(marks);
+		
+		if(student.size()==0)
+			throw new StudentException("Sorry no result found with marks"+marks);
+		else
+			return student;
+	}
+
+	@Override
+	public List<Student> getStudentByName(String name) throws StudentException {
+		
+		List<Student> students= sRepo.findByName(name);
+		if(students.size()==0) {
+			throw new StudentException("No student avaliable with that name"+name);
+		}
+		else
+			return students;
+	}
+
+	@Override
+	public Student getStudentByAddress(String address) throws StudentException {
+		
+		Student student= sRepo.findByAddress(address);
+		
+		if(student != null)
+			return student;
+		else
+			throw new StudentException("No student found with this address..!");
+	}
+
+	@Override
+	public List<Student> getStudentByNameOrMarks(String name, Integer marks) throws StudentException {
+		
+		List<Student> students= sRepo.findByNameOrMarks(name, marks);
+		
+		if(students.size()==0)
+			throw new StudentException("No student found with name"+name +"or marks :"+marks);
+		else
+			return students;
+	
+	}
+
+	
+
+	
+	
 
 }
