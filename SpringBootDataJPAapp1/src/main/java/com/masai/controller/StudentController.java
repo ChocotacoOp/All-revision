@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.masai.exception.StudentException;
 import com.masai.model.Student;
+import com.masai.model.StudentDTO;
 import com.masai.service.StudentService;
 
 @RestController
@@ -106,6 +107,31 @@ public class StudentController {
 		List<Student> students= sService.getStudentByNameOrMarks(name, marks);
 		
 		return new ResponseEntity<List<Student>>(students,HttpStatus.OK);
+	}
+	
+	
+	@GetMapping("/getnamebyroll/{roll}")
+	public ResponseEntity<String> getStudentNameByRoll(@PathVariable("roll") Integer roll) throws StudentException{
+		
+		String name = sService.getStudentNameByRoll(roll);
+		
+		return new ResponseEntity<String>(name,HttpStatus.OK);
+	}
+	
+	//there is problem that string return type returns marks in string so we need to use DTO method
+	@GetMapping("/getnamemarks/{address}")
+	public ResponseEntity<List<String>> getNameAndMarksByAddr(@PathVariable("address") String address) throws StudentException{
+		List<String> results = sService.getNameAndMarksByAddress(address);
+		
+		return new ResponseEntity<List<String>>(results, HttpStatus.OK);
+	}
+	
+	@GetMapping("/namemarksdto/{address}")
+	public ResponseEntity<List<StudentDTO>> getNameMarksByAddDTO(@PathVariable("address") String address) throws StudentException{
+		
+		List<StudentDTO> list= sService.getNameAndMarksByAddressDTO(address);
+	
+		return new ResponseEntity<List<StudentDTO>>(list,HttpStatus.OK);
 	}
 	
 }

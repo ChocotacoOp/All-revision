@@ -1,5 +1,6 @@
 package com.masai.service;
 
+import java.net.Inet4Address;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.masai.exception.StudentException;
 import com.masai.model.Student;
+import com.masai.model.StudentDTO;
 import com.masai.repository.StudentRepo;
 
 @Service
@@ -142,9 +144,37 @@ public class StudentServiceImpl implements StudentService{
 	
 	}
 
-	
+	@Override
+	public String getStudentNameByRoll(Integer roll) throws StudentException {
+		String name = sRepo.getStudentNameByRoll(roll);
+		
+		if(name == null)
+				throw new StudentException("Sorry ! No student found with this roll no "+roll);
+		else
+			return name;
+	}
+
+	@Override
+	public List<String> getNameAndMarksByAddress(String address) throws StudentException {
+
+		List<String> addresses = sRepo.getNameAndMarksByAddress(address);
+		
+		if(addresses.size()==0)
+			throw new StudentException("There is no student with this address :"+address);
+		else
+			return addresses;
+	}
+
+	@Override
+	public List<StudentDTO> getNameAndMarksByAddressDTO(String address) throws StudentException {
+		
+		List<StudentDTO> usingdto = sRepo.getNameAndMarksByAddressDTO(address);
+		
+		if(usingdto.size()==0)
+			throw new StudentException("No record found !");
+		else
+			return usingdto;
+	}
 
 	
-	
-
 }

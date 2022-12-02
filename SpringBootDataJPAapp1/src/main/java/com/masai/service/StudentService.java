@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.masai.exception.StudentException;
 import com.masai.model.Student;
+import com.masai.model.StudentDTO;
 
 public interface StudentService {
 
@@ -26,4 +27,12 @@ public interface StudentService {
 	public Student getStudentByAddress(String address) throws StudentException;
 	
 	public List<Student> getStudentByNameOrMarks(String name,Integer marks) throws StudentException;
+
+	public String getStudentNameByRoll(Integer roll) throws StudentException;
+
+	public List<String> getNameAndMarksByAddress(String address) throws StudentException;
+	
+	public List<StudentDTO> getNameAndMarksByAddressDTO(String address) throws StudentException;
+	
+	
 }
