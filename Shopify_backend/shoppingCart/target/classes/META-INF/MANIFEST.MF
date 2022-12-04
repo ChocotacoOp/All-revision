@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Built-By: Rahul & Rajat
+Build-Jdk: 17.0.4
+Implementation-Title: shoppingCart
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: com.shoppingCart
+Implementation-Vendor: Pivotal Software, Inc.
+Created-By: Maven Integration for Eclipse
+
