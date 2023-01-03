@@ -1,0 +1,200 @@
+SQL> spool d:\client.doc append;
+SQL> create table client(clno varchar2(20), clname varcahr2(20), clcity varchar2(20), duebalance varchar2(20));
+create table client(clno varchar2(20), clname varcahr2(20), clcity varchar2(20), duebalance varchar2(20))
+                                                      *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> create table client(clno varchar2(20), clname varchar2(20), clcity varchar2(20), duebalance varchar2(20));
+
+Table created.
+
+SQL> create table product(pno varchar2(20), pname varchar2(20), profit varchar2(20), selfprice varchar2(20));
+
+Table created.
+
+SQL> create table salesman(eno varchar2(20), ename varchar2(20), eamount number(10));
+
+Table created.
+
+SQL> insert into client values('&clno','&clname', '&clcity', '&duebalance');
+Enter value for clno: cl01
+Enter value for clname: sovick
+Enter value for clcity: khirpai
+Enter value for duebalance: 1000
+old   1: insert into client values('&clno','&clname', '&clcity', '&duebalance')
+new   1: insert into client values('cl01','sovick', 'khirpai', '1000')
+
+1 row created.
+
+SQL> /
+Enter value for clno: cl02
+Enter value for clname: sourav
+Enter value for clcity: cktown
+Enter value for duebalance: 5000
+old   1: insert into client values('&clno','&clname', '&clcity', '&duebalance')
+new   1: insert into client values('cl02','sourav', 'cktown', '5000')
+
+1 row created.
+
+SQL> /
+Enter value for clno: cl03
+Enter value for clname: rajat
+Enter value for clcity: kashi
+Enter value for duebalance: 1000
+old   1: insert into client values('&clno','&clname', '&clcity', '&duebalance')
+new   1: insert into client values('cl03','rajat', 'kashi', '1000')
+
+1 row created.
+
+SQL> /
+Enter value for clno: ganesh
+Enter value for clname:
+Enter value for clcity:
+Enter value for duebalance:
+old   1: insert into client values('&clno','&clname', '&clcity', '&duebalance')
+new   1: insert into client values('ganesh','', '', '')
+
+1 row created.
+
+SQL> /
+Enter value for clno: cl05
+Enter value for clname: ashim
+Enter value for clcity: kol
+Enter value for duebalance: 10000
+old   1: insert into client values('&clno','&clname', '&clcity', '&duebalance')
+new   1: insert into client values('cl05','ashim', 'kol', '10000')
+
+1 row created.
+
+SQL> select*from client;
+
+CLNO                 CLNAME               CLCITY
+-------------------- -------------------- --------------------
+DUEBALANCE
+--------------------
+cl01                 sovick               khirpai
+1000
+
+cl02                 sourav               cktown
+5000
+
+cl03                 rajat                kashi
+1000
+
+
+CLNO                 CLNAME               CLCITY
+-------------------- -------------------- --------------------
+DUEBALANCE
+--------------------
+ganesh
+
+
+cl05                 ashim                kol
+10000
+
+
+SQL> select*from client where clname like 's%';
+
+CLNO                 CLNAME               CLCITY
+-------------------- -------------------- --------------------
+DUEBALANCE
+--------------------
+cl01                 sovick               khirpai
+1000
+
+cl02                 sourav               cktown
+5000
+
+
+SQL> update clinet set clcity ='chennai' where clno ='cl05';
+update clinet set clcity ='chennai' where clno ='cl05'
+       *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> update client set clcity ='chennai' where clno ='cl05';
+
+1 row updated.
+
+SQL> select *from client;
+
+CLNO                 CLNAME               CLCITY
+-------------------- -------------------- --------------------
+DUEBALANCE
+--------------------
+cl01                 sovick               khirpai
+1000
+
+cl02                 sourav               cktown
+5000
+
+cl03                 rajat                kashi
+1000
+
+
+CLNO                 CLNAME               CLCITY
+-------------------- -------------------- --------------------
+DUEBALANCE
+--------------------
+ganesh
+
+
+cl05                 ashim                chennai
+10000
+
+
+SQL> insert into product values('&pno','&pname','&profit','&seltprice');
+Enter value for pno: p1
+Enter value for pname: hp
+Enter value for profit: 10
+Enter value for seltprice: 100
+old   1: insert into product values('&pno','&pname','&profit','&seltprice')
+new   1: insert into product values('p1','hp','10','100')
+
+1 row created.
+
+SQL> /
+Enter value for pno: p2
+Enter value for pname: dell
+Enter value for profit: 5
+Enter value for seltprice: 20000
+old   1: insert into product values('&pno','&pname','&profit','&seltprice')
+new   1: insert into product values('p2','dell','5','20000')
+
+1 row created.
+
+SQL> select*from product;
+
+PNO                  PNAME                PROFIT
+-------------------- -------------------- --------------------
+SELFPRICE
+--------------------
+p1                   hp                   10
+100
+
+p2                   dell                 5
+20000
+
+
+SQL> select pname from product where profit =(select max(profit) from product);
+
+PNAME
+--------------------
+dell
+
+SQL> commit;
+
+Commit complete.
+
+SQL> commit
+  2
+SQL> commit;
+
+Commit complete.
+
+SQL> spool;
+currently spooling to d:\client.doc
+SQL>
